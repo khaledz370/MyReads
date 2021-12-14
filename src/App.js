@@ -14,13 +14,19 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
   }
+  // constructor (props) {
+  //   super(props)
+  //   BooksAPI.getAll().then(data =>
+  //     this.setState({ allBooks: data })
+  //   )
+  // }
 
   render() {
     return (
       <div className="app">
         <Routes>
-        <Route exact path='/search' element={<SearchPage/>}/>
-        <Route exact path='/' element={<ListBooks/>} />
+          <Route exact path='/search' element={<SearchPage />} />
+          <Route exact path='/' element={<ListBooks />} />
         </Routes>
       </div>
     )
