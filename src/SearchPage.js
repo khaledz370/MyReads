@@ -29,6 +29,10 @@ class SearchPage extends Component {
     this.props.onChangeShelf([bookId, newShelf])
   }
 
+  getShelf = (id) => {
+    return this.props.onGetShelf(id)
+  }
+
   render() {
     return (
       <div className="search-books">
@@ -42,7 +46,7 @@ class SearchPage extends Component {
           <ol className="books-grid">
             {typeof this.state.books !== "undefined" ? Object.entries(this.state.books).map((book) => {
               if (book[1].imageLinks && book[1].title) {
-                console.log(book[1].shelf);
+                const shelf = this.getShelf(book[1].id)
                 try {
                   return (
                     <li key={book[1].id}>
@@ -50,7 +54,7 @@ class SearchPage extends Component {
                         <div className="book-top">
                           <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book[1].imageLinks.thumbnail}")` }}></div>
                           <div className="book-shelf-changer">
-                            <select value={book[1].shelf ? book[1].shelf : 'none'} onChange={() => this.changeShelf(book[1], event)}>
+                            <select value={shelf} onChange={() => this.changeShelf(book[1], event)}>
                               <option value="move" disabled>Move to...</option>
                               <option value="currentlyReading">Currently Reading</option>
                               <option value="wantToRead">Want to Read</option>
