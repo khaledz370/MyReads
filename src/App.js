@@ -7,15 +7,14 @@ import { Route, Routes } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {}
-  constructor (props) {
-    super(props)
-    BooksAPI.getAll().then(data =>
-      this.setState({ books: data })
-    )
+  
+  async componentDidMount() {
+    const books = await BooksAPI.getAll();
+    this.setState({ books: books })
   }
 
   changeShelf = (item) => {
-    BooksAPI.update(item[0], item[1]).then(() => {BooksAPI.getAll().then(data => this.setState({ books: data }))})
+    BooksAPI.update(item[0], item[1]).then(() => { BooksAPI.getAll().then(data => this.setState({ books: data })) })
   }
 
   render() {
