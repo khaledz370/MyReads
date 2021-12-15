@@ -13,7 +13,7 @@ class BooksApp extends React.Component {
       this.setState({ books: data })
     )
   }
-  changeCategory = (item) => {
+  changeShelf = (item) => {
     BooksAPI.update(item[0], item[1]).then(() => BooksAPI.getAll().then(data => this.setState({ books: data })))
   }
 
@@ -21,8 +21,8 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Routes>
-          <Route exact path='/search' element={<SearchPage books={typeof this.state.books !== 'undefined' ? this.state.books : ''} onChangeCategory={this.changeCategory} />} />
-          <Route exact path='/' element={<ListBooks books={typeof this.state.books !== 'undefined' ? this.state.books : ''} onChangeCategory={this.changeCategory} />} />
+          <Route exact path='/search' element={<SearchPage books={typeof this.state.books !== 'undefined' ? this.state.books : ''} onChangeShelf={this.changeShelf} />} />
+          <Route exact path='/' element={<ListBooks books={typeof this.state.books !== 'undefined' ? this.state.books : ''} onChangeShelf={this.changeShelf} />} />
         </Routes>
       </div>
     )

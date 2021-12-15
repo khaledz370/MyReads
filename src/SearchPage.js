@@ -18,8 +18,8 @@ class SearchPage extends Component {
     this.setState({ query: event.target.value })
     BooksAPI.search(this.state.query).then(data => this.setState({ books: data }))
   }
-  changeCategory = (bookId, event) => {
-    this.props.onChangeCategory([bookId, event.target.value])
+  changeShelf = (bookId, event) => {
+    this.props.onChangeShelf([bookId, event.target.value])
   }
 
   render() {
@@ -42,7 +42,7 @@ class SearchPage extends Component {
                         <div className="book-top">
                           <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book[1].imageLinks.thumbnail}")` }}></div>
                           <div className="book-shelf-changer">
-                            <select value={book[1].shelf} onChange={() => this.changeCategory(book[1], event)}>
+                            <select value={book[1].shelf} onChange={() => this.changeShelf(book[1], event)}>
                               <option value="move" disabled>Move to...</option>
                               <option value="currentlyReading">Currently Reading</option>
                               <option value="wantToRead">Want to Read</option>

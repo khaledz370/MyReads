@@ -1,27 +1,27 @@
 import React, { Component } from 'react'
 
 /*eslint-disable */
-class Category extends Component {
-    changeCategory = (bookId, event) => {
-        let category = event.target.value
-        this.props.onChangeCategory([bookId, category])
+class BookShelf extends Component {
+    changeShelf = (bookId, event) => {
+        let shelf = event.target.value
+        this.props.onChangeShelf([bookId, shelf])
     }
     render() {
         return (
             <div className="bookshelf">
-                <h2 className="bookshelf-title">{this.props.category}</h2>
+                <h2 className="bookshelf-title">{this.props.bookShelf}</h2>
 
                 <div className="bookshelf-books">
                     <ol className="books-grid">
                         {typeof this.props.books !== "undefined" ? Object.entries(this.props.books).map((book) => {
-                            if (book[1].shelf === this.props.categoryName) {
+                            if (book[1].shelf === this.props.bookShelfName) {
                                 return (
                                     <li key={book[1].id}>
                                         <div className="book">
                                             <div className="book-top">
                                                 <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book[1].imageLinks.thumbnail}")` }}></div>
                                                 <div className="book-shelf-changer">
-                                                    <select value={this.props.categoryName} onChange={() => { this.changeCategory(book[1], event) }}>
+                                                    <select value={this.props.bookShelfName} onChange={() => { this.changeShelf(book[1], event) }}>
                                                         <option value="move" disabled>Move to...</option>
                                                         <option value="currentlyReading">Currently Reading</option>
                                                         <option value="wantToRead">Want to Read</option>
@@ -43,4 +43,4 @@ class Category extends Component {
         )
     }
 }
-export default Category;
+export default BookShelf;

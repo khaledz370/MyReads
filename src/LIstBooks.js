@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
-import Category from './Category';
+import BookShelf from './BookShelf';
 
 class ListBooks extends Component {
 
-  changeCategory = (item) => {
-    this.props.onChangeCategory(item)
+  changeShelf = (item) => {
+    this.props.onChangeShelf(item)
   }
 
   render() {
@@ -17,11 +17,11 @@ class ListBooks extends Component {
         <div className="list-books-content">
           <div>
 
-            <Category books={this.props.books} onChangeCategory={this.changeCategory} category={'Currently Reading'} categoryName={'currentlyReading'} />
+            <BookShelf books={this.props.books} onChangeShelf={this.changeShelf} bookShelf={'Currently Reading'} bookShelfName={'currentlyReading'} />
 
-            <Category books={this.props.books} onChangeCategory={this.changeCategory} category={'Want to Read'} categoryName={'wantToRead'} />
+            <BookShelf books={this.props.books} onChangeShelf={this.changeShelf} bookShelf={'Want to Read'} bookShelfName={'wantToRead'} />
 
-            <Category books={this.props.books} onChangeCategory={this.changeCategory} category={'Read'} categoryName={'read'} />
+            <BookShelf books={this.props.books} onChangeShelf={this.changeShelf} bookShelf={'Read'} bookShelfName={'read'} />
 
           </div>
         </div>
