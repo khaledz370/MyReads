@@ -1,32 +1,28 @@
 import React from 'react'
-// import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from './BooksAPI'
 import './App.css'
 import ListBooks from './LIstBooks'
 import SearchPage from './SearchPage'
 import { Route, Routes } from 'react-router-dom'
 
 class BooksApp extends React.Component {
-  state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
+  state = {}
+  constructor (props) {
+    super(props)
+    BooksAPI.getAll().then(data =>
+      this.setState({ books: data })
+    )
   }
-  // constructor (props) {
-  //   super(props)
-  //   BooksAPI.getAll().then(data =>
-  //     this.setState({ allBooks: data })
-  //   )
-  // }
+  changeCategory = (item) => {
+    BooksAPI.update(item[0], item[1]).then(() => BooksAPI.getAll().then(data => this.setState({ books: data })))
+  }
 
   render() {
     return (
       <div className="app">
         <Routes>
-          <Route exact path='/search' element={<SearchPage />} />
-          <Route exact path='/' element={<ListBooks />} />
+          <Route exact path='/search' element={<SearchPage books={typeof this.state.books !== 'undefined' ? this.state.books : ''} onChangeCategory={this.changeCategory} />} />
+          <Route exact path='/' element={<ListBooks books={typeof this.state.books !== 'undefined' ? this.state.books : ''} onChangeCategory={this.changeCategory} />} />
         </Routes>
       </div>
     )
