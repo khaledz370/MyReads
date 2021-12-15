@@ -7,17 +7,23 @@ class SearchPage extends Component {
   state = {
     query: ''
   }
-  constructor (props) {
-    super(props)
-    BooksAPI.getAll().then(data =>
-      this.setState({ books: data })
-    )
+  async componentDidMount(){
+    const books = await BooksAPI.getAll();
+    this.setState({books:books})
   }
 
   onSearch = (event) => {
-    this.setState({ query: event.target.value })
-    BooksAPI.search(this.state.query).then(data => this.setState({ books: data }))
+    const query = event.target.value;
+    this.setState({ query: query})
+    if (query === '') {
+      BooksAPI.getAll()
+        .then(data => this.setState({ books: data }))
+    } else {
+      BooksAPI.search(query)
+        .then(data => { data.length ? this.setState({ books: data }) : this.setState({ books: [] }) });
+    }
   }
+
   changeShelf = (bookId, event) => {
     this.props.onChangeShelf([bookId, event.target.value])
   }
@@ -34,31 +40,28 @@ class SearchPage extends Component {
         <div className="search-books-results">
           <ol className="books-grid">
             {typeof this.state.books !== "undefined" ? Object.entries(this.state.books).map((book) => {
-              if (this.state.query !== '' || book[0] !== "error") {
-                try {
-                  return (
-                    <li key={book[1].id}>
-                      <div className="book">
-                        <div className="book-top">
-                          <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book[1].imageLinks.thumbnail}")` }}></div>
-                          <div className="book-shelf-changer">
-                            <select value={book[1].shelf} onChange={() => this.changeShelf(book[1], event)}>
-                              <option value="move" disabled>Move to...</option>
-                              <option value="currentlyReading">Currently Reading</option>
-                              <option value="wantToRead">Want to Read</option>
-                              <option value="read">Read</option>
-                              <option value="none">None</option>
-                            </select>
-                          </div>
+              if (book[1].imageLinks && book[1].title) {
+                console.log(book[1].shelf);
+                return (
+                  <li key={book[1].id}>
+                    <div className="book">
+                      <div className="book-top">
+                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book[1].imageLinks.thumbnail}")` }}></div>
+                        <div className="book-shelf-changer">
+                          <select value={book[1].shelf?book[1].shelf:'none'} onChange={() => this.changeShelf(book[1], event)}>
+                            <option value="move" disabled>Move to...</option>
+                            <option value="currentlyReading">Currently Reading</option>
+                            <option value="wantToRead">Want to Read</option>
+                            <option value="read">Read</option>
+                            <option value="none">None</option>
+                          </select>
                         </div>
-                        <div className="book-title">{book[1].title}</div>
-                        <div className="book-authors">{book[1].authors}</div>
                       </div>
-                    </li>
-                  )
-                } catch (err) {
-                  console.log(err);
-                }
+                      <div className="book-title">{book[1].title}</div>
+                      <div className="book-authors">{book[1].authors}</div>
+                    </div>
+                  </li>
+                )
               }
             }) : ''}
           </ol>
