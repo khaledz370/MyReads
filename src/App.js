@@ -49,7 +49,6 @@ class BooksApp extends React.Component {
           <Route
             exact path='/search'
             element={<SearchPage
-              books={typeof this.state.books !== 'undefined' ? this.state.books : ''}
               onChangeShelf={this.changeShelf}
               onGetShelf={this.getShelf} />}
           />
