@@ -1,6 +1,6 @@
 # MyReads App
 
-MyReads App allows you to select and categorize books you have read, are currently reading, or want to read and search through many books.
+MyReads App allows you to select and categorize books you have read, are currently reading, or want to read and also search through many books and add them to your book-shelf.
 
 # Installing
 
