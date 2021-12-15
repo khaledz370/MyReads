@@ -20,7 +20,9 @@ class SearchPage extends Component {
         .then(data => this.setState({ books: data }))
     } else {
       BooksAPI.search(query)
-        .then(data => { data.length ? this.setState({ books: data }) : this.setState({ books: [] }) });
+        .then(data => {
+          data.length ? this.setState({ books: data }) : this.setState({ books: [] })
+        });
     }
   }
 
